@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { InjectPinoLogger } from 'nestjs-pino';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectPinoLogger
+  ) {}
+
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
   }
