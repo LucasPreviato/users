@@ -4,7 +4,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './repositories/mongo/users.repository';
 import * as bcrypt from 'bcrypt';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -20,7 +19,7 @@ export class UsersService {
         ...createUserDto,
         password: await bcrypt.hash(createUserDto.password, 10),
       };
-      const user = this.usersRepository.create(newUser);
+      const user = await this.usersRepository.create(newUser);
       this.logger.info('User created', newUser);
       return {
         ...user,
@@ -31,9 +30,9 @@ export class UsersService {
     }
   }
 
-  findAll(): Promise<any> {
+  async findAll() {
     try {
-      const users = this.usersRepository.findAll();
+      const users = await this.usersRepository.findAll();
       return {
         ...users,
         password: undefined,
@@ -43,9 +42,9 @@ export class UsersService {
     }
   }
 
-  findOne(id: string): Promise<any> {
+  async findOne(id: string) {
     try {
-      const user = this.usersRepository.findOne(id);
+      const user = await this.usersRepository.findOne(id);
       if (!user) {
         throw new Error('User not found');
       }
@@ -57,9 +56,9 @@ export class UsersService {
       this.logger.error('Error creating user', error);
     }
   }
-  FindByEmail(email: string): Promise<any> {
+  async FindByEmail(email: string) {
     try {
-      const user = this.usersRepository.findByEmail(email);
+      const user = await this.usersRepository.findByEmail(email);
       if (!user) {
         throw new Error('User not found');
       }
@@ -72,9 +71,9 @@ export class UsersService {
     }
   }
 
-  update(id: string, updateUserDto: UpdateUserDto): Promise<any> {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     try {
-      const user = this.usersRepository.update(id, updateUserDto);
+      const user = await this.usersRepository.update(id, updateUserDto);
       if (!user) {
         throw new Error('User not found');
       }
@@ -84,10 +83,10 @@ export class UsersService {
     }
   }
 
-  remove(id: string): Promise<any> {
+  async remove(id: string): Promise<any> {
     this.logger.info('removing user');
     try {
-      const user = this.usersRepository.remove(id);
+      const user = await this.usersRepository.remove(id);
       if (!user) {
         throw new Error('User not found');
       }
