@@ -18,9 +18,9 @@ export class User {
   email: string;
   @Prop({ required: true })
   password: string;
-  @Prop({ required: true })
+  @Prop({ required: true, default: Date.now, type: Date, immutable: true })
   created_at?: Date;
-  @Prop({ required: true })
+  @Prop({ required: true, default: Date.now, type: Date })
   updated_at?: Date;
 }
 
