@@ -1,4 +1,5 @@
 export class IUser {
+  coreId: number;
   techId: number;
   name: string;
   email: string;
