@@ -24,4 +24,4 @@ export class User {
   updated_at?: Date;
 }
 
-export const UserShema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass(User);
